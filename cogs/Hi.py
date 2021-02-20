@@ -11,6 +11,11 @@ class Greetings(commands.Cog):
         channel = member.guild.system_channel
         if channel is not None:
             await channel.send('Welcome to the server {0.mention}! I hope you enjoy your time here.'.format(member))
+    @commands.Cog.listener()
+    async def on_member_remove(self, member):
+        channel = member.guild.system_channel
+        if channel is not None:
+            await channel.send('{0.name} has left the server.'.format(member))
 
     @commands.command(aliases=["hi"])
     async def hello(self, ctx, *, member: discord.Member = None):
