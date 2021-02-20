@@ -55,19 +55,6 @@ class Basic (commands.Cog):
        em.set_image(url=member.avatar_url)
        await ctx.send(embed=em)
 
-#@bot.group()
-#async def cool(ctx):
-#    """Says if a user is cool.
-#   In reality this just checks if a subcommand is being invoked.
-#   """
-#    if ctx.invoked_subcommand is None:
-#        await ctx.send('No, {0.subcommand_passed} is not cool'.format(ctx))
-
-#@cool.command(name='bot')
-#async def _bot(ctx):
-#    """Is the bot cool?"""
-#    await ctx.send('Yes, the bot is cool.')
-
     @commands.command()
     async def say(self, ctx, msg):
         """Repeats what you say. Use quotes."""
