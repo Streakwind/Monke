@@ -38,4 +38,4 @@ for extension in initial_extensions:
      print(f'Failed to load extension {extension}.', file=sys.stderr)
      traceback.print_exc()
     
-bot.run("NzM2MzgwOTc1MDI1NjE5MDI1.Xxt-OQ.ceawzDVTW15hJgEtNoNs2Nc2PuA")
+bot.run("n o")
