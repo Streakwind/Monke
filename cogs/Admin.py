@@ -16,7 +16,7 @@ class Admin (commands.Cog):
             await ctx.send (f"{extension} succesfully reloaded.")
         except Exception as e:
             error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
-            return await ctx.send("Oh noes! The extension failed to reload! Here's the traceback:\n{error}")
+            return await ctx.send(f"Oh noes! The extension failed to reload! Here's the traceback:\n{error}")
     @commands.command()
     async def changeactidle(self, ctx):
         """Changed the status to idle."""
