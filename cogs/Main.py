@@ -22,7 +22,7 @@ class Main(commands.Cog):
     @commands.command()
     async def sourcecode(self, ctx)
         """Don't....."""
-        await ctx.send(f"`https://github.com/Streakwind/Monke`")
+        await ctx.send("<https://github.com/Streakwind/Monke>")
 
 def setup(bot):
     bot.add_cog(Main(bot))
