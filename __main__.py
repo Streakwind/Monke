@@ -32,7 +32,7 @@ initial_extensions = (
     'cogs.Admin',
     'cogs.BasicCommands',
     'cogs.Main',
-    `cogs.Moderation`,
+    'cogs.Moderation',
 )
 
 bot.load_extension('jishaku')
