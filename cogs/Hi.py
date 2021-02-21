@@ -26,10 +26,10 @@ class Greetings(commands.Cog):
         else:
             await ctx.send('Hello {0.name}!'.format(member))
         self._last_member = member
-#    @commands.command()  # this is automatically registered to MyCog
+#    @commands.command()
 #    async def hi(self, ctx):
 #        """Say hi!"""
-#        await ctx.send(f"hiii {ctx.author.mention}!!!")
+#        await ctx.send(f"Hi {ctx.author.mention}!")
     
 def setup(bot):
     bot.add_cog(Greetings(bot))
