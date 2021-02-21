@@ -36,8 +36,8 @@ class Basic (commands.Cog):
         await ctx.send(random.choice(choices))
 
     @commands.command()
-    async def repeat(self, ctx, times: int, content='repeating...'):
-        """Repeats a message, use quotes.(Discord ratelimit: 5mps)"""
+    async def repeat(self, ctx, times: int, *, content='repeating...'):
+        """Repeats a message. (Discord ratelimit: 5mps)"""
         for i in range(times):
             await ctx.send(content)
 
@@ -56,8 +56,8 @@ class Basic (commands.Cog):
        await ctx.send(embed=em)
 
     @commands.command()
-    async def say(self, ctx, msg):
-        """Repeats what you say. Use quotes."""
+    async def say(self, ctx, *, msg):
+        """Repeats what you say.""
         await ctx.send(f"{msg}")
 
     @commands.command()
