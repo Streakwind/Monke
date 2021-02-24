@@ -29,7 +29,7 @@ async def monke_bad_bot_lol(message):
 
 async def status():
     async with aiohttp.ClientSession() as session:
-        webhook = Webhook.from_url('https://discord.com/api/webhooks/813596571949989919/jSjUcCUiKmb33yT-o0-vlXdlLJZmFnYUug6mQOMbIcQ5iD50rTPONs8854V2hgf6BQJC', adapter=AsyncWebhookAdapter(session))
+        webhook = Webhook.from_url('HAHAHA NO', adapter=AsyncWebhookAdapter(session))
         await webhook.send('test', username='Monke Status')
         
 initial_extensions = (
