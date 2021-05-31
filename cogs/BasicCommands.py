@@ -8,10 +8,27 @@ import sys
 class Basic (commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        
     @commands.command()
-    async def add(self, ctx, left: int, right: int):
-        """Adds two numbers together."""
-        await ctx.send(left + right)
+    async def calc(self, ctx, left, operator, right):
+        """Calculates 2 numbers. (No fractions)"""
+        if operator == '/':
+            await ctx.send(left / right)
+            
+        if operator == '*':
+            await ctx.send(left * right)
+        
+        if operator == '+':
+            await ctx.send(left + right)
+            
+        if operator == '-':
+            await ctx.send(left - right)
+        
+        else:
+            await ctx.send("Invalid operation!")
+            error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
+            return await ctx.send(f"Error. Here's the traceback:\n```{error}```")
+        
     
     @commands.command()
     async def info(self, ctx):
@@ -45,10 +62,20 @@ class Basic (commands.Cog):
        """Displays a specified users avatar"""
        if not member:
            member = ctx.author
-       em = discord.Embed()
+       em = discord.Embed(title = str(member))
        em.set_image(url=member.avatar_url)
-       await ctx.send(f"{member}",embed=em)
+       await ctx.send(embed=em)
+    
+    @commands.command()
+    async def prefix(self, ctx):
+        """Prefixes for the bot"""
+        await ctx.send("Current prefixes\n**1.** `Monke `\n**2.** `a!`\n**The prefixes are not case-sensitive**")
 
+    
+    @commands.command()
+    async def ping(self, ctx):
+        """The bots ping"""
+        await ctx.send(f"My ping is {self.bot.latency * 1000}ms")
 #@bot.group()
 #async def cool(ctx):
 #    """Says if a user is cool.
@@ -65,6 +92,20 @@ class Basic (commands.Cog):
     @commands.command()
     async def say(self, ctx, *, msg):
         """Repeats what you say."""
+        #print(f'{ctx.author} used a!say to say {msg}')
+        
+        message = ctx.message
+    
+        destination = None
+        if ctx.guild is None:
+            destination = "Private Message"
+            guild_id = None
+        else:
+            destination = f"#{message.channel} ({message.guild})"
+            guild_id = ctx.guild.id
+        
+        
+        print(f"TIME: {message.created_at}UTC \n{ctx.author} used a!say to say {msg} at {destination}\n")
         await ctx.send(f"{msg}")
 
     @commands.command()
