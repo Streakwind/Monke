@@ -22,12 +22,33 @@ class Main(commands.Cog):
     @commands.command()
     async def sourcecode(self, ctx):
         """Don't....."""
+  #      print (f'{ctx.author} used a!sourcecode')
+        message = ctx.message
+    
+        destination = None
+        if ctx.guild is None:
+            destination = "Private Message"
+            guild_id = None
+        else:
+            destination = f"#{message.channel} ({message.guild})"
+            guild_id = ctx.guild.id
+        
+        print(f"TIME:{message.created_at}\n{ctx.author} used source code at {destination}\n")
         await ctx.send("<https://github.com/Streakwind/Monke>")
 
     @commands.command(hidden=True)
     async def secret(self, ctx):
         """I wonder what this does...."""
-        await ctx.send("```Never gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you```")
+        secret = """
+        Never gonna give you up
+        Never gonna let you down
+        Never gonna run around and desert you
+        Never gonna make you cry
+        Never gonna say goodbye
+        Never gonna tell a lie and hurt you
+        """
+        em = discord.Embed(description=secret, color=discord.Color.blue())
+        await ctx.send(embed = em)
     
     @commands.command()
     async def invite(self, ctx):
@@ -37,3 +58,4 @@ class Main(commands.Cog):
                
 def setup(bot):
     bot.add_cog(Main(bot))
+
