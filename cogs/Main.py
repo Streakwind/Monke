@@ -12,28 +12,18 @@ class Main(commands.Cog):
     @commands.command(aliases = ["update"])
     async def updatelog(self, ctx):
         """Update log for the bot!"""
-        await ctx.send ("**5 new features**\n\n`a!sourcecode`\n`Status changing commands (Admin only)`\n`a!secret`\n`a!messageowner`\n`a!kick and a!ban` ")
+        await ctx.send ("**5 new features**\n\n`Added a messaging system`\n`Upgraded messageowner command`\n`Bug fixes on some commands`\n`Finally got reactions to work (Admin-only command)`\n`Logging!`")
     @commands.command()
-    async def messageowner(self, ctx, *, arg):
+    async def messageowner(self, ctx, *, arg:str):
        """Sends the owner a message! """
        owner = self.bot.get_user(self.bot.owner_id)
-       await owner.send(f"{ctx.author} has sent you a message!\n{arg}")
+   #    await owner.send(f"{ctx.message.channel} ({ctx.message.guild})\n{ctx.author} ({ctx.author.id}) has sent you a message!\n{arg}")
+       await owner.send(f"{ctx.author} ({ctx.author.id}): {arg}")
        await ctx.send(f"Succesfully sent {arg}")
     @commands.command()
     async def sourcecode(self, ctx):
         """Don't....."""
   #      print (f'{ctx.author} used a!sourcecode')
-        message = ctx.message
-    
-        destination = None
-        if ctx.guild is None:
-            destination = "Private Message"
-            guild_id = None
-        else:
-            destination = f"#{message.channel} ({message.guild})"
-            guild_id = ctx.guild.id
-        
-        print(f"TIME:{message.created_at}\n{ctx.author} used source code at {destination}\n")
         await ctx.send("<https://github.com/Streakwind/Monke>")
 
     @commands.command(hidden=True)
@@ -54,7 +44,18 @@ class Main(commands.Cog):
     async def invite(self, ctx):
         """Gives you the invite link for the bot."""
         await ctx.send(f"Here is the invite link {ctx.author.mention} <https://discord.com/api/oauth2/authorize?client_id=736380975025619025&permissions=271969350&scope=bot>")
-
+    @commands.command()
+    async def message(ctx, userid, *, message):
+        """Message another person (Use a!userid person to find their userid)"""
+        person = self.bot.get_user(userid)
+        await person.send(f"{ctx.author}: {message}\nBy the way, use `a!message yourmessagehere {ctx.author.id}` to message them back")
+        await ctx.send(f"Succesfully sent {message}")
+    
+    @commands.command()
+    async def userid(self, ctx, member: discord.Member = None):
+        if not member:
+            member = ctx.author
+        await ctx.send(f"{member}'s user id is {member.id}")
                
 def setup(bot):
     bot.add_cog(Main(bot))
