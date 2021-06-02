@@ -41,14 +41,19 @@ async def on_connect():
     async with aiohttp.ClientSession() as session:
         webhook = Webhook.from_url(config.webhook, adapter=AsyncWebhookAdapter(session))
         await webhook.send('Connected to discord!', username='Status')
- 
+        
+@bot.event        
+async def on_resumed():
+    async with aiohttp.ClientSession() as session:
+        webhook = Webhook.from_url(config.webhook, adapter=AsyncWebhookAdapter(session))
+        await webhook.send('Resumed connection to discord!', username='Status')
+        
 @bot.listen('on_message')
 async def direct_message(message):
         channel = bot.get_channel()
         if message.guild is None:
             if message.author.id != 736380975025619025:
-                if message.author.id != 714554283026153554:
-                   await channel.send(f"DIRECT MESSAGE\nTIME: {message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {message.content}")
+                await channel.send(f"DIRECT MESSAGE\nTIME: {message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {message.content}")
 
 @bot.listen('on_command')
 async def logging(ctx):
@@ -62,8 +67,7 @@ async def logging(ctx):
         else:
             destination = f"#{message.channel} ({message.guild})"
             
-        if message.author.id != 714554283026153554:
-            await channel.send(f"{destination}\nTIME: {ctx.message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {ctx.message.content}")
+        await channel.send(f"{destination}\nTIME: {ctx.message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {ctx.message.content}")
 
            
 @bot.listen('on_message')
@@ -98,3 +102,4 @@ for extension in initial_extensions:
      traceback.print_exc()
     
 bot.run(config.token)
+
