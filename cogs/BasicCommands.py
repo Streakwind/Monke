@@ -55,6 +55,9 @@ class Basic (commands.Cog):
     @commands.command()
     async def joined(self, ctx, member: discord.Member):
         """Says when a member joined."""
+        
+        if not member:
+           member = ctx.author
         await ctx.send('{0.name} joined in {0.joined_at} UTC'.format(member))
     
     @commands.command()
@@ -76,18 +79,6 @@ class Basic (commands.Cog):
     async def ping(self, ctx):
         """The bots ping"""
         await ctx.send(f"My ping is {self.bot.latency * 1000}ms")
-#@bot.group()
-#async def cool(ctx):
-#    """Says if a user is cool.
-#   In reality this just checks if a subcommand is being invoked.
-#   """
-#    if ctx.invoked_subcommand is None:
-#        await ctx.send('No, {0.subcommand_passed} is not cool'.format(ctx))
-
-#@cool.command(name='bot')
-#async def _bot(ctx):
-#    """Is the bot cool?"""
-#    await ctx.send('Yes, the bot is cool.')
 
     @commands.command()
     async def say(self, ctx, *, msg):
