@@ -53,11 +53,11 @@ class Basic (commands.Cog):
         await ctx.send(random.choice(choices))
 
     @commands.command()
-    async def joined(self, ctx, member: discord.Member):
+    async def joined(self, ctx, member: discord.Member = None):
         """Says when a member joined."""
         
         if not member:
-           member = ctx.author
+            member = ctx.author
         await ctx.send('{0.name} joined in {0.joined_at} UTC'.format(member))
     
     @commands.command()
@@ -79,24 +79,10 @@ class Basic (commands.Cog):
     async def ping(self, ctx):
         """The bots ping"""
         await ctx.send(f"My ping is {self.bot.latency * 1000}ms")
-
     @commands.command()
     async def say(self, ctx, *, msg):
         """Repeats what you say."""
         #print(f'{ctx.author} used a!say to say {msg}')
-        
-        message = ctx.message
-    
-        destination = None
-        if ctx.guild is None:
-            destination = "Private Message"
-            guild_id = None
-        else:
-            destination = f"#{message.channel} ({message.guild})"
-            guild_id = ctx.guild.id
-        
-        
-        print(f"TIME: {message.created_at}UTC \n{ctx.author} used a!say to say {msg} at {destination}\n")
         await ctx.send(f"{msg}")
 
     @commands.command()
