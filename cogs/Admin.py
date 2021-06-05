@@ -13,7 +13,9 @@ class Admin (commands.Cog):
         """Reload an extension"""
         try:
             self.bot.reload_extension(extension)
-            await ctx.send (f"{extension} succesfully reloaded.")
+            print(f"{extension} successfully reloaded.")
+            emoji = '\N{THUMBS UP SIGN}'
+            await ctx.message.add_reaction(emoji)
         except Exception as e:
             # this next line formats the traceback and sends it
             error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
@@ -23,17 +25,16 @@ class Admin (commands.Cog):
     async def changeactidle(self, ctx):
         """Changed the status to idle."""
         await self.bot.change_presence(status=discord.Status.idle)
-        #await ctx.send ("Success!")
         emoji = '\N{THUMBS UP SIGN}'
-        await message.add_reaction(emoji)
+        await ctx.message.add_reaction(emoji)
         
     @commands.command()
     async def changeactdnd(self, ctx):
         """Changed the status to DND."""
         await self.bot.change_presence(status=discord.Status.do_not_disturb)
         #await ctx.send ("Success!")
-        emoji = '<:thumbsup:>'
-        await message.add_reaction(emoji)
+        emoji = '\N{THUMBS UP SIGN}'
+        await ctx.message.add_reaction(emoji)
         
     @commands.command()
     async def changeactoff(self, ctx):
@@ -41,15 +42,15 @@ class Admin (commands.Cog):
         await self.bot.change_presence(status=discord.Status.invisible)
         #await ctx.send ("Success!")
         emoji = '\N{THUMBS UP SIGN}'
-        await message.add_reaction(emoji)
+        await ctx.message.add_reaction(emoji)
     
     @commands.command()
     async def resetact(self, ctx):
         """Reset the status."""
         await self.bot.change_presence(status=discord.Status.online)
-        #await ctx.send ("Success!")
         emoji = '\N{THUMBS UP SIGN}'
-        await message.add_reaction(emoji)
+        await ctx.message.add_reaction(emoji)
+
         
     @commands.command()
     async def setplay(self, ctx, *, thing):
@@ -57,7 +58,8 @@ class Admin (commands.Cog):
         await self.bot.change_presence(activity = discord.Game(thing))
         #await ctx.send ("Success!")
         emoji = '\N{THUMBS UP SIGN}'
-        await message.add_reaction(emoji)
+        await ctx.message.add_reaction(emoji)
+
         
     @commands.command()
     async def setwatch(self, ctx, *, thing):
@@ -65,14 +67,16 @@ class Admin (commands.Cog):
         await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=thing))
         #await ctx.send ("Success!")
         emoji = '\N{THUMBS UP SIGN}'
-        await message.add_reaction(emoji)
+        await ctx.message.add_reaction(emoji)
+
         
     @commands.command()
     async def setlisten(self, ctx, *, thing):
         """Set's a listen status"""
         await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=thing))
         emoji = '\N{THUMBS UP SIGN}'
-        await message.add_reaction(emoji)
+        await ctx.message.add_reaction(emoji)
+
         
     @commands.command()
     async def repeat(self, ctx, times: int, *, content='repeating...'):
@@ -85,6 +89,13 @@ class Admin (commands.Cog):
     #    """Lets the bot play a game."""
    #     await self.bot.change_presence(status=discord.Status.{status} activity={game})
    #     await ctx.send ("Success!")
+   
+    @commands.command()
+    async def troll(self, ctx, userid:int, *, message):
+        """troll"""
+        person = self.bot.get_user(userid)
+        await person.send(f"{message}")
+        await ctx.send(f"Succesfully sent {message}")
 
 def setup(bot):
     bot.add_cog(Admin(bot))

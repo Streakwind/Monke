@@ -8,10 +8,27 @@ import sys
 class Basic (commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        
     @commands.command()
-    async def add(self, ctx, left: int, right: int):
-        """Adds two numbers together."""
-        await ctx.send(left + right)
+    async def calc(self, ctx, left, operator, right):
+        """Calculates 2 numbers. (No fractions)"""
+        if operator == '/':
+            await ctx.send(left / right)
+            
+        if operator == '*':
+            await ctx.send(left * right)
+        
+        if operator == '+':
+            await ctx.send(left + right)
+            
+        if operator == '-':
+            await ctx.send(left - right)
+        
+        else:
+            await ctx.send("Invalid operation!")
+            error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
+            return await ctx.send(f"Error. Here's the traceback:\n```{error}```")
+        
     
     @commands.command()
     async def info(self, ctx):
@@ -36,8 +53,11 @@ class Basic (commands.Cog):
         await ctx.send(random.choice(choices))
 
     @commands.command()
-    async def joined(self, ctx, member: discord.Member):
+    async def joined(self, ctx, member: discord.Member = None):
         """Says when a member joined."""
+        
+        if not member:
+            member = ctx.author
         await ctx.send('{0.name} joined in {0.joined_at} UTC'.format(member))
     
     @commands.command()
@@ -45,10 +65,20 @@ class Basic (commands.Cog):
        """Displays a specified users avatar"""
        if not member:
            member = ctx.author
-       em = discord.Embed()
+       em = discord.Embed(title = str(member))
        em.set_image(url=member.avatar_url)
-       await ctx.send(f"{member}",embed=em)
+       await ctx.send(embed=em)
+    
+    @commands.command()
+    async def prefix(self, ctx):
+        """Prefixes for the bot"""
+        await ctx.send("Current prefixes\n**1.** `Monke `\n**2.** `a!`\n**The prefixes are not case-sensitive**")
 
+    
+    @commands.command()
+    async def ping(self, ctx):
+        """The bots ping"""
+        await ctx.send(f"My ping is {self.bot.latency * 1000}ms")
 #@bot.group()
 #async def cool(ctx):
 #    """Says if a user is cool.
@@ -65,6 +95,7 @@ class Basic (commands.Cog):
     @commands.command()
     async def say(self, ctx, *, msg):
         """Repeats what you say."""
+        #print(f'{ctx.author} used a!say to say {msg}')
         await ctx.send(f"{msg}")
 
     @commands.command()
