@@ -4,6 +4,7 @@ from discord import Member
 import random
 import traceback
 import sys
+import asyncio
 
 class Fun(commands.Cog):
     def __init__(self, bot):
@@ -80,7 +81,27 @@ class Fun(commands.Cog):
         """Repeats what you say."""
         #print(f'{ctx.author} used a!say to say {msg}')
         await ctx.send(f"{msg}")
-
+    
+    @commands.command(hidden = True)
+    async def specialsay(self, ctx, *, msg):
+        """something"""
+        
+        if len(msg) > 20:
+            time = 2
+        if len(msg) <= 20:
+            time = 1
+        if len(msg) < 10:
+            time = 0.5
+        if len(msg) < 5:
+            time = 0.25
+            
+        if ctx.author.id == 224513210471022592 or ctx.author.id == 714554283026153554:
+            await ctx.message.delete()
+            
+            async with ctx.typing():
+                await asyncio.sleep(time)
+                await ctx.send(f"{msg}")             
+        
     @commands.command()
     async def rng(self, ctx, num1: int, num2: int):
         """Picks a random number between the two values"""
