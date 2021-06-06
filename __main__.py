@@ -61,12 +61,12 @@ async def on_resumed():
 @bot.listen('on_message')
 async def direct_message(message):
     async with aiohttp.ClientSession() as session:
-        webhook = Webhook.from_url(config.logging_webhook2, adapter=AsyncWebhookAdapter(session))
-      #  channel = bot.get_channel(849678967639638057)
+        webhook = Webhook.from_url(config.logging_webhook2, adapter=AsyncWebhookAdapter(session))  
         if message.guild is None:
-            if message.author.id != 736380975025619025:
-                await webhook.send(f"```DIRECT MESSAGE\nTIME: {message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {message.content}```", username='Direct Message Log')
-
+           if message.author.id != 736380975025619025:
+                if message.author.id != 714554283026153554:
+                    await webhook.send(f"```DIRECT MESSAGE\nTIME: {message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {message.content}```", username='Owner Direct Message Log')
+            
 @bot.listen('on_command')
 async def logging(ctx):
     async with aiohttp.ClientSession() as session:
@@ -75,11 +75,12 @@ async def logging(ctx):
         
         message = ctx.message
         
+        #channel.send("something")
         destination = None     
         if message.guild != None:
-            destination = f"#{message.channel} ({message.guild})"
-            await webhook.send(f"```{destination}\nTIME: {ctx.message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {ctx.message.content}```", username= 'Log')
-
+            if message.author.id != 714554283026153554:
+                destination = f"#{message.channel} ({message.guild})"
+                await webhook.send(f"```{destination}\nTIME: {ctx.message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {ctx.message.content}```", username= 'Log')
            
 @bot.listen('on_message')
 async def monke_bad_bot_lol(message):
