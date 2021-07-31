@@ -115,6 +115,10 @@ class Information(commands.Cog):
         
         else:
             await ctx.send("This command can only be used in guilds/servers!")
+#    @commands.command()
+ #   async def uptime(self, ctx):
+  #      uptime = self.bot.uptime
+   #     await ctx.send(f"{uptime}")
         
                
 def setup(bot):

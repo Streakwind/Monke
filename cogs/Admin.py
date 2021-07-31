@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
 import traceback
+import asyncio
 
 class Admin (commands.Cog):
     def __init__(self, bot):
@@ -96,6 +97,25 @@ class Admin (commands.Cog):
         person = self.bot.get_user(userid)
         await person.send(f"{message}")
         await ctx.send(f"Succesfully sent {message}")
-
+    
+    @commands.command(hidden = True)
+    async def reply(self, ctx, msgid, msg):
+        """something"""
+        message = ctx.channel.fetch_message(msgid)
+        
+        if len(msg) > 20:
+            time = 2
+        if len(msg) <= 20:
+            time = 1
+        if len(msg) < 10:
+            time = 0.5
+        if len(msg) < 5:
+            time = 0.25
+            
+        await ctx.message.delete()
+            
+        async with ctx.typing():
+            await asyncio.sleep(time)
+            await message.reply(f"{msg}", mentionauthor = False)
 def setup(bot):
     bot.add_cog(Admin(bot))

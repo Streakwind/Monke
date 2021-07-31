@@ -14,7 +14,7 @@ description = ''''''
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix=['a!', 'monke ', 'Monke ', 'A!'], owner_id=714554283026153554, description=description, intents=intents)
+bot = commands.Bot(command_prefix=['a!', 'monke ', 'Monke ', 'A!', '<@!736380975025619025>'], owner_id=714554283026153554, description=description, intents=intents)
 bot.help_command = commands.MinimalHelpCommand()
 bot.help_command.hidden=True
 #async def status():
@@ -87,7 +87,14 @@ async def monke_bad_bot_lol(message):
         if message.content.startswith('monke bad bot'):
             await message.channel.send('I heard that <:wemeetagain:813559615639257129>')
             print (f"{message.author} said the bot is bad.")
-  
+
+@bot.listen('on_message_edit')
+async def message_edit(message):
+    webhook = Webhook.from_url(config.guild_webhook, adapter=AsyncWebhookAdapter(session))
+
+    if message.guild.id == 812439278000406590:
+        await webhook.send(f"{message.author} has edited a message ({message.id}).\nPrevious: {message.before})\nNew: {message.after}", username = 'Guild Log Test')
+        
 @bot.command(hidden=True)
 async def hello(ctx):
     await ctx.send (f"Hello, {ctx.author.mention}. You can use `a!help` to get started.")
