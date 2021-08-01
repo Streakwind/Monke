@@ -89,9 +89,11 @@ async def monke_bad_bot_lol(message):
             print (f"{message.author} said the bot is bad.")
 
 @bot.listen('on_message_edit')
-async def message_edit(message):
+async def message_edit(ctx):
     webhook = Webhook.from_url(config.guild_webhook, adapter=AsyncWebhookAdapter(session))
-
+    
+    message = ctx.message
+    
     if message.guild.id == 812439278000406590:
         await webhook.send(f"{message.author} has edited a message ({message.id}).\nPrevious: {message.before})\nNew: {message.after}", username = 'Guild Log Test')
         

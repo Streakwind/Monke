@@ -61,7 +61,7 @@ class Information(commands.Cog):
         await ctx.send(f"{member}'s user id is {member.id}")
         
     @commands.command(aliases = ["ui"])
-    async def userinfo(self, ctx, member: discord.Member = None):
+    async def userinfo(self, ctx, *, member: discord.Member = None):
         isbot = ":x:"
         
         if not member:

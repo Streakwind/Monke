@@ -96,7 +96,18 @@ class Music(commands.Cog):
             await ctx.message.add_reaction(emoji)
         else:
             await ctx.send ("You are not connected to a voice channel!")
-
+    
+    @commands.command()
+    async def stop(self, ctx):
+        """Stops the current track"""
+        
+        if ctx.voice_client.is_playing():
+            ctx.voice_client.stop()
+            emoji = '\N{THUMBS UP SIGN}'
+            await ctx.message.add_reaction(emoji)
+        else:
+            await ctx.send ("No song is playing!"
+                            )
     @play.before_invoke
     async def ensure_voice(self, ctx):
         if ctx.voice_client is None:
