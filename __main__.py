@@ -49,8 +49,6 @@ async def on_connect():
     async with aiohttp.ClientSession() as session:
         webhook = Webhook.from_url(config.webhook, adapter=AsyncWebhookAdapter(session))
         await webhook.send('Connected to discord!', username='Status')
-
-
         
 @bot.event        
 async def on_resumed():
@@ -89,18 +87,62 @@ async def monke_bad_bot_lol(message):
             print (f"{message.author} said the bot is bad.")
 
 @bot.listen('on_message_edit')
-async def message_edit(ctx):
-    webhook = Webhook.from_url(config.guild_webhook, adapter=AsyncWebhookAdapter(session))
+async def messageedit(message):
+    async with aiohttp.ClientSession() as session:
+        webhook = Webhook.from_url(config.guild_webhook, adapter=AsyncWebhookAdapter(session))
     
-    message = ctx.message
-    
-    if message.guild.id == 812439278000406590:
-        await webhook.send(f"{message.author} has edited a message ({message.id}).\nPrevious: {message.before})\nNew: {message.after}", username = 'Guild Log Test')
+        if message.guild.id == 812439278000406590:
+            await webhook.send(f"{message.author} has edited a message ({message.id}).\nPrevious: {message.before})\nNew: {message.after}", username = 'Guild Log Test')
         
 @bot.command(hidden=True)
 async def hello(ctx):
     await ctx.send (f"Hello, {ctx.author.mention}. You can use `a!help` to get started.")
     
+@bot.event
+async def on_command_error(ctx, error):
+    async with aiohttp.ClientSession() as session:
+        webhook = Webhook.from_url(config.logging_webhook, adapter=AsyncWebhookAdapter(session))
+        
+        """The event triggered when an error is raised while invoking a command.
+        Parameters
+        ------------
+        ctx: commands.Context
+            The context used for command invocation.
+        error: commands.CommandError
+            The Exception raised.
+        """
+        if hasattr(ctx.command, 'on_error'):
+            return
+
+        cog = ctx.cog
+        if cog:
+            if cog._get_overridden_method(cog.cog_command_error) is not None:
+                return
+
+        ignored = (commands.CommandNotFound, )
+        error = getattr(error, 'original', error)
+
+        if isinstance(error, ignored):
+            return
+
+        if isinstance(error, commands.DisabledCommand):
+            await ctx.send(f'{ctx.command} has been disabled.')
+
+        elif isinstance(error, commands.NoPrivateMessage):
+            try:
+                await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
+            except discord.HTTPException:
+                pass
+
+        elif isinstance(error, commands.BadArgument):
+            if ctx.command.qualified_name == 'tag list':
+                await ctx.send('I could not find that member. Please try again.')
+
+        else:
+            print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+            await webhook.send(f"Ignoring exception in command {ctx.command}:\n{str(error)}")
+            
 initial_extensions = (
   #  'cogs.Hi',
     'cogs.Admin',
@@ -128,5 +170,5 @@ for extension in initial_extensions:
   except Exception as e:
      print(f'Failed to load extension {extension}.', file=sys.stderr)
      traceback.print_exc()
-    
+
 bot.run(config.token)

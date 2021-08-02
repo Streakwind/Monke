@@ -8,7 +8,7 @@ import sys
 class Information(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        
+    
     @commands.command()
     async def learn(self, ctx):
         """Tells you more about the bot"""
