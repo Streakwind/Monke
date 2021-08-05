@@ -9,6 +9,7 @@ class Admin (commands.Cog):
         
     async def cog_check(self, ctx):
         return await commands.is_owner().predicate(ctx)
+    
     @commands.command()
     async def reload(self, ctx, extension):
         """Reload an extension"""
@@ -22,14 +23,14 @@ class Admin (commands.Cog):
             error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
             return await ctx.send(f"Oh noes! The extension failed to reload! Here's the traceback:\n```{error}```")
         
-    @commands.command()
+    @commands.command(hidden=True)
     async def changeactidle(self, ctx):
         """Changed the status to idle."""
         await self.bot.change_presence(status=discord.Status.idle)
         emoji = '\N{THUMBS UP SIGN}'
         await ctx.message.add_reaction(emoji)
         
-    @commands.command()
+    @commands.command(hidden=True)
     async def changeactdnd(self, ctx):
         """Changed the status to DND."""
         await self.bot.change_presence(status=discord.Status.do_not_disturb)
@@ -37,7 +38,7 @@ class Admin (commands.Cog):
         emoji = '\N{THUMBS UP SIGN}'
         await ctx.message.add_reaction(emoji)
         
-    @commands.command()
+    @commands.command(hidden=True)
     async def changeactoff(self, ctx):
         """Changed the status to invisible."""
         await self.bot.change_presence(status=discord.Status.invisible)
@@ -45,7 +46,7 @@ class Admin (commands.Cog):
         emoji = '\N{THUMBS UP SIGN}'
         await ctx.message.add_reaction(emoji)
     
-    @commands.command()
+    @commands.command(hidden=True)
     async def resetact(self, ctx):
         """Reset the status."""
         await self.bot.change_presence(status=discord.Status.online)
@@ -53,7 +54,7 @@ class Admin (commands.Cog):
         await ctx.message.add_reaction(emoji)
 
         
-    @commands.command()
+    @commands.command(hidden=True)
     async def setplay(self, ctx, *, thing):
         """Set's a play status"""
         await self.bot.change_presence(activity = discord.Game(thing))
@@ -62,7 +63,7 @@ class Admin (commands.Cog):
         await ctx.message.add_reaction(emoji)
 
         
-    @commands.command()
+    @commands.command(hidden=True)
     async def setwatch(self, ctx, *, thing):
         """Set's a watch status"""
         await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=thing))
@@ -71,7 +72,7 @@ class Admin (commands.Cog):
         await ctx.message.add_reaction(emoji)
 
         
-    @commands.command()
+    @commands.command(hidden=True)
     async def setlisten(self, ctx, *, thing):
         """Set's a listen status"""
         await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=thing))
@@ -79,7 +80,7 @@ class Admin (commands.Cog):
         await ctx.message.add_reaction(emoji)
 
         
-    @commands.command()
+    @commands.command(hidden=True)
     async def repeat(self, ctx, times: int, *, content='repeating...'):
         """Admin-only command for purge testing."""
         for i in range(times):
@@ -91,7 +92,7 @@ class Admin (commands.Cog):
    #     await self.bot.change_presence(status=discord.Status.{status} activity={game})
    #     await ctx.send ("Success!")
    
-    @commands.command()
+    @commands.command(hidden=True)
     async def troll(self, ctx, userid:int, *, message):
         """troll"""
         person = self.bot.get_user(userid)
@@ -117,5 +118,6 @@ class Admin (commands.Cog):
         async with ctx.typing():
             await asyncio.sleep(time)
             await message.reply(f"{msg}", mentionauthor = False)
+            
 def setup(bot):
     bot.add_cog(Admin(bot))

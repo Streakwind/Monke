@@ -177,15 +177,9 @@ async def on_command_error(ctx, error):
             await webhook.send(f"Ignoring exception in command {ctx.command}:\n{str(error)}")
             
 initial_extensions = (
-  #  'cogs.Hi',
-    'cogs.Admin',
- #   'cogs.BasicCommands',
- #   'cogs.Main',
-    'cogs.Moderation',
-    'cogs.Music',
-  # 'cogs.slashcommands',
- #   'cogs.eh',
- #   'cogs.help',
+    'cogs.admin',
+    'cogs.moderation',
+    'cogs.music',
     'cogs.fun',
     'cogs.information',
 )

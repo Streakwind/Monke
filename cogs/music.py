@@ -106,7 +106,7 @@ class Music(commands.Cog):
             emoji = '\N{THUMBS UP SIGN}'
             await ctx.message.add_reaction(emoji)
         else:
-            await ctx.send ("You are not connected to a voice channel!")
+            await ctx.send ("I am not connected to a voice channel!")
     
     @commands.command()
     async def stop(self, ctx):
@@ -119,18 +119,15 @@ class Music(commands.Cog):
         else:
             await ctx.send ("No song is playing!")
             
-    @commands.Cog.listener('on_voice_state_update')
+    @commands.Cog.listener("on_voice_state_update")
     async def botdisconnect(self, ctx):
         members = 0
         
-        for i in ctx.voice_client.members:
-            if i.bot:
-                continue
-            else:
+        for i in range(10):
                 members += 1
         
         if members == 1:
-            ctx.voice_client.disconnect
+            await ctx.voice_client.disconnect()
             
     @play.before_invoke
     async def ensure_voice(self, ctx):
