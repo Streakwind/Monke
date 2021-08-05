@@ -11,4 +11,8 @@ CREDITS
 -------
 https://github.com/Rapptz/discord.py/blob/master/examples/basic_voice.py - Music <br> </br>
 https://gist.github.com/EvieePy/7822af90858ef65012ea500bcecf1612 - Error Handling <br> </br>
+<<<<<<< HEAD
 @Fyssion and @ilovetocode2019 - Helped me get started with discord.py, helped me fix a lot of commands <br> </br>
+=======
+@Fyssion and @ilovetocode2019 - Helped me get started with discord.py, helped me fix a lot of commands <br> </br>
+>>>>>>> a753886e7ef5ce217bf5bc132cdd7e37268de79e
