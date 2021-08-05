@@ -59,41 +59,74 @@ async def on_resumed():
 @bot.listen('on_message')
 async def direct_message(message):
     async with aiohttp.ClientSession() as session:
-        webhook = Webhook.from_url(config.logging_webhook2, adapter=AsyncWebhookAdapter(session))  
+        webhook = Webhook.from_url(config.logging_webhook, adapter=AsyncWebhookAdapter(session))  
         if message.guild is None:
            if message.author.id != 736380975025619025:
                 if message.author.id != 714554283026153554:
-                    await webhook.send(f"```DIRECT MESSAGE\nTIME: {message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {message.content}```", username='Owner Direct Message Log')
-            
+                    embed = discord.Embed(title="DIRECT MESSAGE")
+                    embed.add_field(name="TIME", value=f"{message.created_at}UTC")
+                    embed.add_field(name="FROM", value=f"{message.author} ({message.author.id})")
+                    embed.add_field(name="MESSAGE", value=f"{message.content}")
+                    embed.set_thumbnail(url=message.author.avatar_url) 
+                    #await webhook.send(f"```DIRECT MESSAGE\nTIME: {message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {message.content}```", username='Direct Message Log')
+                    await webhook.send(embed = embed, username = "Direct Message Log")
+                    
 @bot.listen('on_command')
-async def logging(ctx):
+async def logging(message):
     async with aiohttp.ClientSession() as session:
         webhook = Webhook.from_url(config.logging_webhook, adapter=AsyncWebhookAdapter(session))
    #     channel = bot.get_channel(849678967639638057)
-        
-        message = ctx.message
-        
+   
         #channel.send("something")
         destination = None     
         if message.guild != None:
             if message.author.id != 714554283026153554:
                 destination = f"#{message.channel} ({message.guild})"
-                await webhook.send(f"```{destination}\nTIME: {ctx.message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {ctx.message.content}```", username= 'Log')
-           
+                
+                embed = discord.Embed(title=f"{destination}")
+                embed.add_field(name="TIME", value=f"{message.created_at}UTC")
+                embed.add_field(name="FROM", value=f"{message.author} ({message.author.id})")
+                embed.add_field(name="MESSAGE", value=f"{message.content}")
+                embed.set_thumbnail(url=message.author.avatar_url)
+                #await webhook.send(f"```{destination}\nTIME: {ctx.message.created_at}UTC\nFROM: {message.author} ({message.author.id})\nMESSAGE: {ctx.message.content}```", username= 'Log')
+                await webhook.send(embed=embed, username="Log")
+               
 @bot.listen('on_message')
 async def monke_bad_bot_lol(message):
         if message.content.startswith('monke bad bot'):
             await message.channel.send('I heard that <:wemeetagain:813559615639257129>')
             print (f"{message.author} said the bot is bad.")
 
-@bot.listen('on_message_edit')
-async def messageedit(message):
+@bot.event
+async def on_message_edit(message_before, message_after):
+    async with aiohttp.ClientSession() as session:
+        webhook = Webhook.from_url(config.guild_webhook, adapter=AsyncWebhookAdapter(session))
+    
+        if message_after.guild.id == 812439278000406590:
+            
+            embed = discord.Embed(title=f"{message_after.author} has edited a message!")
+            embed.add_field(name="TIME", value=f"{message_after.created_at}UTC")
+            embed.add_field(name="LINK", value=f"{message_after.jump_url}")
+            embed.add_field(name="BEFORE", value=f"{message_before.content}", inline=True)
+            embed.add_field(name="AFTER", value=f"{message_after.content}", inline=True)
+            embed.set_thumbnail(url=message_after.author.avatar_url)
+                
+            #await webhook.send(f"{message_after.author} has edited a message.\n{message_after.jump_url}\nPrevious: {message_before.content}\nNew: {message_after.content}", username = 'Guild Log')
+            await webhook.send(embed=embed, username="Guild Log")
+            
+@bot.event
+async def on_message_delete(message):
     async with aiohttp.ClientSession() as session:
         webhook = Webhook.from_url(config.guild_webhook, adapter=AsyncWebhookAdapter(session))
     
         if message.guild.id == 812439278000406590:
-            await webhook.send(f"{message.author} has edited a message ({message.id}).\nPrevious: {message.before})\nNew: {message.after}", username = 'Guild Log Test')
-        
+            embed = discord.Embed(title=f"{message.author} has deleted a message!")
+            embed.add_field(name="TIME", value=f"{message.created_at}UTC")
+            embed.add_field(name="MESSAGE", value=f"{message.content}")
+            embed.set_thumbnail(url=message.author.avatar_url)           
+           # await webhook.send(f"{message.author} has deleted a message.\nMessage: {message.content}", username = 'Guild Log')
+            await webhook.send(embed=embed, username="Guild Log")
+            
 @bot.command(hidden=True)
 async def hello(ctx):
     await ctx.send (f"Hello, {ctx.author.mention}. You can use `a!help` to get started.")
@@ -150,18 +183,18 @@ initial_extensions = (
  #   'cogs.Main',
     'cogs.Moderation',
     'cogs.Music',
- #   'cogs.slashcommands',
+  # 'cogs.slashcommands',
  #   'cogs.eh',
  #   'cogs.help',
     'cogs.fun',
     'cogs.information',
 )
-"""
-async def get_pre(bot, message):
-  return "prefix"  # or a list, ["pre1","pre2"]
+#"""
+#async def get_pre(bot, message):
+  #return "prefix"  # or a list, ["pre1","pre2"]
 
-bot = commands.Bot(command_prefix=get_pre ...)
-"""
+#bot = commands.Bot(command_prefix=get_pre ...)
+#"""
 
 bot.load_extension('jishaku')
 for extension in initial_extensions:

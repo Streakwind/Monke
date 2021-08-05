@@ -68,13 +68,24 @@ class Music(commands.Cog):
         else:
             await ctx.send("You are not connected to a voice channel!")
         
-    @commands.command(aliases = ["youtube", "yt", "p"])
-    async def play(self, ctx, *, url):
-        """Plays a song"""
+    @commands.command()
+    async def play(self, ctx, *, query):
+        """Plays a file from the local filesystem"""
+
+        source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(query))
+        ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
+
+        await ctx.send('Now playing: {}'.format(query))
+
+    @commands.command()
+    async def yt(self, ctx, *, url):
+        """Plays from a url (almost anything youtube_dl supports)"""
+
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop)
             ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
-            await ctx.send(f"Playing: {url}")
+
+        await ctx.send('Now playing: {}'.format(player.title))
 
     @commands.command()
     async def volume(self, ctx, volume: int):
@@ -112,14 +123,14 @@ class Music(commands.Cog):
     async def botdisconnect(self, ctx):
         members = 0
         
-        for i in ctx.voice.channel.members:
+        for i in ctx.voice_client.members:
             if i.bot:
                 continue
             else:
                 members += 1
         
         if members == 1:
-            ctx.voice.channel.disconnect
+            ctx.voice_client.disconnect
             
     @play.before_invoke
     async def ensure_voice(self, ctx):
