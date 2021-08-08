@@ -109,8 +109,11 @@ class Fun(commands.Cog):
         await ctx.send(f"You got {value}.")
             
     @commands.command()
-    async def docs(self, ctx):
-        await  ctx.send("Most of the stuff: <https://discordpy.readthedocs.io/en/latest/api.html#>\nMain page: https://discordpy.readthedocs.io/en/latest/index.html")
+    async def dpy_docs(self, ctx):
+        """Sends the link to the discord.py documentation"""
+        
+        await ctx.send("Most of the stuff: <https://discordpy.readthedocs.io/en/latest/api.html#>\nMain page: https://discordpy.readthedocs.io/en/latest/index.html")
+
 def setup(bot):
     bot.add_cog(Fun(bot))
         

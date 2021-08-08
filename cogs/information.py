@@ -8,60 +8,37 @@ import sys
 class Information(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    
-    @commands.command()
-    async def learn(self, ctx):
-        """Tells you more about the bot"""
-        await ctx.send (f"Hiya {ctx.author.mention}! Thanks for inviting **Monke**. Start out by using `a!info` or `a!help`! Have fun!")
-
-    @commands.command(aliases = ["update"])
-    async def updatelog(self, ctx):
-        """Update log for the bot!"""
-        await ctx.send ("**5 new features**\n\n`Added a messaging system`\n`Upgraded messageowner command`\n`Bug fixes on some commands`\n`Finally got reactions to work (Admin-only command)`\n`Logging!`")
+  
     @commands.command()
     async def joined(self, ctx, member: discord.Member = None):
-        """Says when a member joined."""
+        """Tells you when a member joined."""
         
         if not member:
             member = ctx.author
+            
         await ctx.send('{0.name} joined in {0.joined_at} UTC'.format(member))
     
     @commands.command()
-    async def avatar(self, ctx, member: discord.Member = None):
+    async def avatar(self, ctx, member: discord.User = None):
        """Displays a specified users avatar"""
        if not member:
            member = ctx.author
        em = discord.Embed(title = str(member))
        em.set_image(url=member.avatar_url)
        await ctx.send(embed=em)
-    
+
     @commands.command()
-    async def prefix(self, ctx):
-        """Prefixes for the bot"""
-        await ctx.send("Current prefixes\n**1.** `Monke `\n**2.** `a!`\n**The prefixes are not case-sensitive**")
-    
-    @commands.command()
-    async def ping(self, ctx):
-        """The bots ping"""
-        await ctx.send(f"My ping is {self.bot.latency * 1000}ms")
-    
-    @commands.command()
-    async def info(self, ctx):
-        """Information about the bot"""
-        await ctx.send("Hi, I'm **Monke**. I was made by Streakwind. The bot started out using <https://github.com/Rapptz/discord.py/blob/master/examples/basic_bot.py> **__NOTE: This bot is still in development. Do not expect the most from it.__**")
-    @commands.command()
-    async def sourcecode(self, ctx):
-        """Don't....."""
-        await ctx.send("<https://github.com/Streakwind/Monke>")
-    
-    @commands.command()
-    async def userid(self, ctx, member: discord.Member = None):
+    async def userid(self, ctx, member: discord.User = None):
+        """Tells you the user ID for a certain user"""
+        
         if not member:
             member = ctx.author
         await ctx.send(f"{member}'s user id is {member.id}")
         
     @commands.command(aliases = ["ui"])
-    async def userinfo(self, ctx, *, member: discord.Member = None):
+    async def userinfo(self, ctx, *, member: discord.User = None):
+        """Information about a certain user"""
+        
         isbot = ":x:"
         
         if not member:
@@ -93,7 +70,7 @@ class Information(commands.Cog):
  #       await ctx.send(f"{member}\nUSERID:{member.id}\nBOT:{isbot}\nAVATAR:{member.avatar_url}")
         await ctx.send(embed = embed)
     
-    @commands.command(aliases = ["gi"])
+    @commands.command(aliases = ["gi"], disabled=True)
     async def guildinfo(self, ctx):   
         
         guild = ctx.guild
@@ -115,11 +92,6 @@ class Information(commands.Cog):
         
         else:
             await ctx.send("This command can only be used in guilds/servers!")
-#    @commands.command()
- #   async def uptime(self, ctx):
-  #      uptime = self.bot.uptime
-   #     await ctx.send(f"{uptime}")
-        
                
 def setup(bot):
     bot.add_cog(Information(bot))
