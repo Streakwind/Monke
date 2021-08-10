@@ -102,25 +102,25 @@ class Admin (commands.Cog):
         await person.send(f"{message}")
         await ctx.send(f"Succesfully sent {message}")
     
-    @commands.command(hidden = True)
-    async def reply(self, ctx, msgid, msg):
-        """something"""
-        message = ctx.channel.fetch_message(msgid)
+   # @commands.command(hidden = True)
+    #async def reply(self, ctx, msgid, msg):
+     #   """something"""
+      #  message = ctx.channel.fetch_message(msgid)
         
-        if len(msg) > 20:
-            time = 2
-        if len(msg) <= 20:
-            time = 1
-        if len(msg) < 10:
-            time = 0.5
-        if len(msg) < 5:
-            time = 0.25
+       # if len(msg) > 20:
+       #     time = 2
+       # if len(msg) <= 20:
+        #    time = 1
+       # if len(msg) < 10:
+       #     time = 0.5
+       # if len(msg) < 5:
+       #     time = 0.25
             
-        await ctx.message.delete()
+       # await ctx.message.delete()
             
-        async with ctx.typing():
-            await asyncio.sleep(time)
-            await message.reply(f"{msg}", mentionauthor = False)
+      #  async with ctx.typing():
+       #     await asyncio.sleep(time)
+        #    await message.reply(f"{msg}", mentionauthor = False)
     
         
 def setup(bot):

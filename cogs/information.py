@@ -39,8 +39,6 @@ class Information(commands.Cog):
     async def userinfo(self, ctx, *, member: discord.User = None):
         """Information about a certain user"""
         
-        isbot = ":x:"
-        
         if not member:
             member = ctx.author
         

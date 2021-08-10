@@ -179,26 +179,52 @@ class Monke(commands.Bot):
             #if isinstance(error, ignored):
                 #return
             
-            if isinstance(error, commands.CommandNotFound):
-                await ctx.send(":x: Command not found")
+    #        if isinstance(error, commands.CommandNotFound):
+   #             await ctx.send(":x: Command not found")
                 
-            if isinstance(error, commands.DisabledCommand):
-                await ctx.send(f'{ctx.command} has been disabled.')
+  #          if isinstance(error, commands.DisabledCommand):
+ #               await ctx.send(f'{ctx.command} has been disabled.')
 
-            elif isinstance(error, commands.NoPrivateMessage):
-                try:
-                    await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
-                except discord.HTTPException:
-                    pass
+#            elif isinstance(error, commands.NoPrivateMessage):
+         #       try:
+        #            await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
+       #         except discord.HTTPException:
+      #              pass
 
-            elif isinstance(error, commands.BadArgument):
-                if ctx.command.qualified_name == 'tag list':
-                    await ctx.send('I could not find that member. Please try again.')
-
+     #       elif isinstance(error, commands.BadArgument):
+    #            if ctx.command.qualified_name == 'tag list':
+   #                 await ctx.send('I could not find that member. Please try again.')
+            
+            embed_1 = discord.Embed(title="Command Error", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
+            embed_1.add_field(name="Error", value=str(error))
+            
+            await ctx.send(embed=embed_1)
             
             print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
             traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
-            await webhook.send(f"Ignoring exception in command {ctx.command}:\n{str(error)}")
+    
+            embed = discord.Embed(title=f"Command Error - Time: {ctx.message.created_at}", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
+            embed.set_thumbnail(url=ctx.author.avatar_url)
+            embed.add_field(name="Error", value=str(error))
+            embed.add_field(name="Command User", value=f"{ctx.author} - {ctx.author.id}")
+            
+            await webhook.send(embed=embed)
+            
+    @commands.Cog.listener('on_raw_reaction_add')
+    async def on_raw_reaction_add(self, reaction):
+        print ("Hello")
+        
+        guild = self.get_guild(reaction.guild_id)
+        
+        if str(reaction.emoji) == '\U00002705':
+            print("1")
+            
+            if str(reaction.message_id) == '874421110115041311':  
+                print("2")
+                
+                role = guild.get_role('874421249550454837')
+                
+                await reaction.member.add_roles(role)
 
 bot = Monke()
 
