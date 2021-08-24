@@ -196,7 +196,7 @@ class Monke(commands.Bot):
    #                 await ctx.send('I could not find that member. Please try again.')
             
             embed_1 = discord.Embed(title="Command Error", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
-            embed_1.add_field(name="Error", value=str(error))
+            embed_1.add_field(name="Error", value=f"`{str(error)}`")
             
             await ctx.send(embed=embed_1)
             
@@ -205,7 +205,7 @@ class Monke(commands.Bot):
     
             embed = discord.Embed(title=f"Command Error - Time: {ctx.message.created_at}", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
             embed.set_thumbnail(url=ctx.author.avatar_url)
-            embed.add_field(name="Error", value=str(error))
+            embed.add_field(name="Error", value=f"`{str(error)}`")
             embed.add_field(name="Command User", value=f"{ctx.author} - {ctx.author.id}")
             
             await webhook.send(embed=embed)

@@ -119,15 +119,15 @@ class Music(commands.Cog):
         else:
             await ctx.send ("No song is playing!")
             
-    @commands.Cog.listener("on_voice_state_update")
-    async def botdisconnect(self, ctx):
-        members = 0
+#    @commands.Cog.listener("on_voice_state_update")
+ #   async def botdisconnect(self, ctx):
+  #      members = 0
         
-        for i in range(10):
-                members += 1
+   #     for i in range(10):
+    #            members += 1
         
-        if members == 1:
-            await ctx.voice_client.disconnect()
+    #    if members == 1:
+     #       await ctx.voice_client.disconnect()
             
     @play.before_invoke
     async def ensure_voice(self, ctx):
