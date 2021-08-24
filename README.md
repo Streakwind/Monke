@@ -12,7 +12,8 @@ https://gist.github.com/EvieePy/7822af90858ef65012ea500bcecf1612 - Error Handlin
 @Fyssion and @ilovetocode2019 - Helped me get started with discord.py, helped me fix a lot of commands <br> </br>
 
 # Bot Setup <h> <h/>
-If you do want to run an instance of my bot, please edit the code by yourself. <br> </br>
+Please don't run an instance of my bot. <br> </br>
+If you do want to run an instance of my bot, please edit the code by yourself, and don't ask me what to edit.<br> </br>
 The only file that you need to add is `config.py`<br> </br>
 To setup `config.py`, have 3 webhooks and one token ready. You do not need all three webhooks, and you can 
 edit the code to make it only require 2 webhooks, or even one. `config.py` should look something like this
