@@ -13,7 +13,7 @@ class Admin (commands.Cog):
     async def cog_check(self, ctx):
         return await commands.is_owner().predicate(ctx)
     
-    @commands.command()
+    @commands.group(invoke_without_command=True)
     async def reload(self, ctx, extension):
         """Reload an extension"""
         try:
@@ -24,7 +24,18 @@ class Admin (commands.Cog):
         except Exception as e:
             # this next line formats the traceback and sends it
             error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
-            return await ctx.send(f"Oh noes! The extension failed to reload! Here's the traceback:\n```{error}```")
+            return await ctx.send(f"Failed to reload extensions{extension}:\n```{error}```")
+
+    @reload.command()
+    async def all(self, ctx):
+        """Reload all extensions"""
+        for extension in initial_extensions:
+            try:
+                self.load_extension(extension)
+            except Exception as e:
+                print(f'Failed to load extension {extension}.', file=sys.stderr)
+                traceback.print_exc()
+
         
     @commands.command(hidden=True)
     async def changeactidle(self, ctx):
@@ -121,6 +132,14 @@ class Admin (commands.Cog):
       #  async with ctx.typing():
        #     await asyncio.sleep(time)
         #    await message.reply(f"{msg}", mentionauthor = False)
+    @commands.command()
+    async def debug_mode(self, ctx):
+        """Turn debug mode on/off"""
+        if self.bot.debugMode:
+            self.bot.debugMode=False
+        
+        else:
+            self.bot.debugMode=True
     
         
 def setup(bot):
