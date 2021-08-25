@@ -2,6 +2,8 @@ from discord.ext import commands
 import discord
 import traceback
 import config
+import aiohttp
+from discord import Webhook, AsyncWebhookAdapter
 
 class Log (commands.Cog):
     def __init__(self, bot):

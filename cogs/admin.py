@@ -16,6 +16,9 @@ class Admin (commands.Cog):
     @commands.group(invoke_without_command=True)
     async def reload(self, ctx, extension):
         """Reload an extension"""
+        
+        print ("hELLO")
+        
         try:
             self.bot.reload_extension(extension)
             print(f"{extension} successfully reloaded.")
@@ -24,17 +27,30 @@ class Admin (commands.Cog):
         except Exception as e:
             # this next line formats the traceback and sends it
             error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
-            return await ctx.send(f"Failed to reload extensions{extension}:\n```{error}```")
+            return await ctx.send(f"Failed to reload extension {extension}:\n```{error}```")
 
-    @reload.command()
-    async def all(self, ctx):
-        """Reload all extensions"""
-        for extension in initial_extensions:
-            try:
-                self.load_extension(extension)
-            except Exception as e:
-                print(f'Failed to load extension {extension}.', file=sys.stderr)
-                traceback.print_exc()
+    #@reload.command()
+    #async def all(self, ctx):
+        #"""Reload all extensions"""
+        #initial_extensions = (
+            #'cogs.admin',
+            #'cogs.moderation',
+            #'cogs.music',
+            #'cogs.fun',
+            #'cogs.information',
+            #'cogs.stats',
+            #'cogs.log',
+        #)
+        
+        #print("Hello")
+        
+        #for extension in initial_extensions:
+            #try:
+                #self.bot.load_extension(extension)
+            #except Exception as e:
+                #error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
+                #return await ctx.send(f"Failed to reload extensions {extension}:\n```{error}```")
+                
 
         
     @commands.command(hidden=True)

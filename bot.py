@@ -25,6 +25,7 @@ initial_extensions = (
     'cogs.fun',
     'cogs.information',
     'cogs.stats',
+    'cogs.log',
 )
     
 class Monke(commands.Bot):
@@ -33,7 +34,6 @@ class Monke(commands.Bot):
         self.uptime=datetime.datetime.utcnow()
         self.bot_id=736380975025619025
         self.bot_guild=812439278000406590
-        self.extensions = initial_extensions
 
         super().__init__(
             command_prefix=get_prefix,
