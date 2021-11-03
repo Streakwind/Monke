@@ -23,7 +23,11 @@ token = "(token here)"
 webhook = "(status webhook url here)"
 logging_webhook = "(logging webhook url here)"
 logging_webhook2 = "(direct message webhook url here)"
+guild_webhook = "(guild webhook url here)"
 ```
 <br> </br>
 
 `config.py` should be in the bot's folder.
+
+<br> </br>
+

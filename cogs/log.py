@@ -102,20 +102,24 @@ class Log (commands.Cog):
                 #return
             
             if isinstance(error, commands.CommandNotFound):
-                await ctx.send(":x: Command not found")
+                if not self.bot.debugMode:
+                    await ctx.send(":x: Command not found")
                 
             if isinstance(error, commands.DisabledCommand):
-                await ctx.send(f'{ctx.command} has been disabled.')
+                if not self.bot.debugMode:
+                    await ctx.send(f'{ctx.command} has been disabled.')
 
             elif isinstance(error, commands.NoPrivateMessage):
-                try:
-                    await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
-                except discord.HTTPException:
-                    pass
+                if not self.bot.debugMode:
+                    try:
+                        await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
+                    except discord.HTTPException:
+                        pass
 
             elif isinstance(error, commands.BadArgument):
-                if ctx.command.qualified_name == 'tag list':
-                    await ctx.send('I could not find that member. Please try again.')
+                if not self.bot.debugMode:
+                    if ctx.command.qualified_name == 'tag list':
+                        await ctx.send('I could not find that member. Please try again.')
             
             if self.bot.debugMode:
                 embed_1 = discord.Embed(title="Command Error", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
