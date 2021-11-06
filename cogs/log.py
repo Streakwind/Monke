@@ -3,6 +3,7 @@ import discord
 import traceback
 import config
 import aiohttp
+import sys
 from discord import Webhook, AsyncWebhookAdapter
 
 class Log (commands.Cog):
