@@ -101,6 +101,13 @@ class Log (commands.Cog):
             #if isinstance(error, ignored):
                 #return
             
+            if self.bot.debugMode:
+                embed_1 = discord.Embed(title="Command Error", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
+                embed_1.add_field(name="Error", value=f"`{str(error)}`")
+            
+                await ctx.send(embed=embed_1)
+                return
+
             if isinstance(error, commands.CommandNotFound):
                 if not self.bot.debugMode:
                     await ctx.send(":x: Command not found")
@@ -121,12 +128,6 @@ class Log (commands.Cog):
                     if ctx.command.qualified_name == 'tag list':
                         await ctx.send('I could not find that member. Please try again.')
             
-            if self.bot.debugMode:
-                embed_1 = discord.Embed(title="Command Error", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
-                embed_1.add_field(name="Error", value=f"`{str(error)}`")
-            
-                await ctx.send(embed=embed_1)
-            
             print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
             traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
     
@@ -139,5 +140,6 @@ class Log (commands.Cog):
             embed.add_field(name="Guild", value=guild)
             
             await webhook.send(embed=embed)
+            
 def setup(bot):
     bot.add_cog(Log(bot))
