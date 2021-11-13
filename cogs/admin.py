@@ -116,6 +116,7 @@ class Admin (commands.Cog):
         for i in range(times):
             await ctx.send(content)
             wait(0.5)
+            
    # @commands.command()
    # @commands.is_owner()
    # async def changeactplay(self, ctx, status, game):
