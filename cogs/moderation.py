@@ -29,7 +29,11 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages = True)
     async def purge(self, ctx, amount: int):
-        await ctx.channel.purge(limit=amount + 1)
+        for i in range(amount + 1):
+          await ctx.channel.purge(limit=1)
+
+          wait(1.5)
+        
       #  await ctx.send(f"Successfully purged {amount} messages.")
 
 def setup(bot):
