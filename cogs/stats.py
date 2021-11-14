@@ -17,7 +17,7 @@ class Statistics(commands.Cog):
     @commands.command()
     async def prefix(self, ctx):
         """Prefixes for the bot"""
-        await ctx.send("Prefixes: `a!`, `monke`")
+        await ctx.send(f"Prefixes: {self.bot.command_prefix}")
     
     @commands.command(aliases=["latency"])
     async def ping(self, ctx):

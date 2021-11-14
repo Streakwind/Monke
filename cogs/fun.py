@@ -101,6 +101,12 @@ class Fun(commands.Cog):
             async with ctx.typing():
                 await asyncio.sleep(time)
                 await ctx.send(f"{msg}")
+        else:
+            await ctx.message.delete()
+
+            async with ctx.typing():
+                await asyncio.sleep(time)
+                await ctx.send(f"{ctx.author}: {msg}")
         
     @commands.command()
     async def rng(self, ctx, num1: int, num2: int):

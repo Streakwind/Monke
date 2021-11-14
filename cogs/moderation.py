@@ -1,5 +1,6 @@
 from discord.ext import commands
 import discord
+import asyncio
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
@@ -32,7 +33,7 @@ class Moderation(commands.Cog):
         for i in range(amount + 1):
           await ctx.channel.purge(limit=1)
 
-          wait(1.5)
+          await asyncio.sleep(1.5)
         
       #  await ctx.send(f"Successfully purged {amount} messages.")
 

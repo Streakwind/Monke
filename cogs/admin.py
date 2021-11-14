@@ -16,9 +16,7 @@ class Admin (commands.Cog):
     @commands.group(invoke_without_command=True)
     async def reload(self, ctx, extension):
         """Reload an extension"""
-        
-        print ("hELLO")
-        
+
         try:
             self.bot.reload_extension(extension)
             print(f"{extension} successfully reloaded.")
@@ -115,7 +113,8 @@ class Admin (commands.Cog):
         """Admin-only command for purge testing."""
         for i in range(times):
             await ctx.send(content)
-            wait(0.5)
+            
+            await asyncio.sleep(0.5)
             
    # @commands.command()
    # @commands.is_owner()
@@ -155,9 +154,13 @@ class Admin (commands.Cog):
         """Turn debug mode on/off"""
         if self.bot.debugMode:
             self.bot.debugMode=False
+            emoji = '\N{THUMBS UP SIGN}'
+            await ctx.message.add_reaction(emoji)
         
         else:
             self.bot.debugMode=True
+            emoji = '\N{THUMBS UP SIGN}'
+            await ctx.message.add_reaction(emoji)
     
         
 def setup(bot):

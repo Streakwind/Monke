@@ -102,6 +102,16 @@ class Log (commands.Cog):
             #if isinstance(error, ignored):
                 #return
             
+            embed = discord.Embed(title=f"Command Error - Time: {ctx.message.created_at}", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
+            embed.set_thumbnail(url=ctx.author.avatar_url)
+            embed.add_field(name="Error", value=f"`{str(error)}`")
+            embed.add_field(name="Command User", value=f"{ctx.author} - {ctx.author.id}")
+
+            guild = bot.get_guild(ctx.message.guild_id)
+            embed.add_field(name="Guild", value=guild)
+            
+            await webhook.send(embed=embed)
+
             if self.bot.debugMode:
                 embed_1 = discord.Embed(title="Command Error", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
                 embed_1.add_field(name="Error", value=f"`{str(error)}`")
@@ -131,16 +141,6 @@ class Log (commands.Cog):
             
             print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
             traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
-    
-            embed = discord.Embed(title=f"Command Error - Time: {ctx.message.created_at}", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
-            embed.set_thumbnail(url=ctx.author.avatar_url)
-            embed.add_field(name="Error", value=f"`{str(error)}`")
-            embed.add_field(name="Command User", value=f"{ctx.author} - {ctx.author.id}")
-
-            guild = bot.get_guild(ctx.message.guild_id)
-            embed.add_field(name="Guild", value=guild)
-            
-            await webhook.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(Log(bot))
