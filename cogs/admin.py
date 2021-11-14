@@ -114,7 +114,7 @@ class Admin (commands.Cog):
         for i in range(times):
             await ctx.send(content)
             
-            await asyncio.sleep(0.5)
+            await asyncio.sleep(1)
             
    # @commands.command()
    # @commands.is_owner()
@@ -149,6 +149,7 @@ class Admin (commands.Cog):
       #  async with ctx.typing():
        #     await asyncio.sleep(time)
         #    await message.reply(f"{msg}", mentionauthor = False)
+        
     @commands.command()
     async def debug_mode(self, ctx):
         """Turn debug mode on/off"""
