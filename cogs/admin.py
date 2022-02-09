@@ -115,13 +115,14 @@ class Admin (commands.Cog):
             await ctx.send(content)
             
             await asyncio.sleep(1)
-            
-   # @commands.command()
-   # @commands.is_owner()
-   # async def changeactplay(self, ctx, status, game):
+    
+    #JSK is better
+    #@commands.command()
+    #@commands.is_owner()
+    #async def changeactplay(self, ctx, status, game):
     #    """Lets the bot play a game."""
-   #     await self.bot.change_presence(status=discord.Status.{status} activity={game})
-   #     await ctx.send ("Success!")
+    #    await self.bot.change_presence(status=discord.Status.{status} activity={game})
+    #    await ctx.send ("Success!")
    
     @commands.command(hidden=True)
     async def troll(self, ctx, userid:int, *, message):
