@@ -1,13 +1,6 @@
-# Don't mind. <h> <h/>
+# Don't mind.
 
-# Key <h2> <h2/>
-# Don't mind. <h> <h/>
-✅/✔ - done
-❌ - not done
-# Don't mind. <h> <h/>
-
-# Key <h2> <h2/>
-# Don't mind. <h> <h/>
+<h2> Key  </h2>
 ✅/✔ - done
 ❌ - not done
 ➖ - In progress
