@@ -36,7 +36,11 @@ class Statistics(commands.Cog):
         uptime = precisedelta(uptime_before)
         
         await ctx.send(f"I booted up {uptime} ago")
-        
+
+    @commands.command(aliases = ["issue", "reportissue"])
+    async def report(self, ctx):
+        await ctx.send("Problem with the bot? Report issues here! <https://github.com/Streakwind/Monke/issues>")
+
 def setup(bot):
     bot.add_cog(Statistics(bot))
 
