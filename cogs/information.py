@@ -6,6 +6,7 @@ import traceback
 import sys
 import humanize
 from humanize import precisedelta
+from typing import union
 
 class Information(commands.Cog):
     def __init__(self, bot):
@@ -38,7 +39,7 @@ class Information(commands.Cog):
         await ctx.send(f"{member}'s user id is {member.id}")
         
     @commands.command(aliases = ["ui"])
-    async def userinfo(self, ctx, *, member: discord.User = None):
+    async def userinfo(self, ctx, *, member: Union[discord.Member, discord.User] = None):
         """Information about a certain user"""
         
         if not member:
