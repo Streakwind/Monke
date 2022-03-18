@@ -54,7 +54,6 @@ class Information(commands.Cog):
         time=precisedelta(member.created_at, minimum_unit="hours")
         
         embed.add_field(name="User created at", value=f"{time} ago", inline=True)
-        
         if ctx.guild: 
             if member in ctx.guild.members:
                 time_2=precisedelta(member.joined_at, minimum_unit="hours")
@@ -65,7 +64,8 @@ class Information(commands.Cog):
         
         if member.bot:
             embed.description += "This user is a bot"
-            
+
+        
         if ctx.guild:     
             if member.id == ctx.guild.owner.id:
                 embed.description += f"\nThis user owns this server ({ctx.guild.name})"

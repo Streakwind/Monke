@@ -107,7 +107,8 @@ class Log (commands.Cog):
             embed.add_field(name="Error", value=f"`{str(error)}`")
             embed.add_field(name="Command User", value=f"{ctx.author} - {ctx.author.id}")
 
-            guild = self.bot.get_guild(ctx.message.guild_id)
+            #guild = self.bot.get_guild(ctx.message.guild_id)
+            guild = ctx.message.guild
             embed.add_field(name="Guild", value=guild)
             
             await webhook.send(embed=embed)
