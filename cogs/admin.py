@@ -13,7 +13,7 @@ class Admin (commands.Cog):
     async def cog_check(self, ctx):
         return await commands.is_owner().predicate(ctx)
     
-    @commands.group(invoke_without_command=True)
+    @commands.command(hidden=True)
     async def reload(self, ctx, extension):
         """Reload an extension"""
 
@@ -27,30 +27,21 @@ class Admin (commands.Cog):
             error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
             return await ctx.send(f"Failed to reload extension {extension}:\n```{error}```")
 
-    #@reload.command()
-    #async def all(self, ctx):
-        #"""Reload all extensions"""
-        #initial_extensions = (
-            #'cogs.admin',
-            #'cogs.moderation',
-            #'cogs.music',
-            #'cogs.fun',
-            #'cogs.information',
-            #'cogs.stats',
-            #'cogs.log',
-        #)
-        
-        #print("Hello")
-        
-        #for extension in initial_extensions:
-            #try:
-                #self.bot.load_extension(extension)
-            #except Exception as e:
-                #error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
-                #return await ctx.send(f"Failed to reload extensions {extension}:\n```{error}```")
-                
+    # @reload.command()
+    # async def all(self, ctx):
+    #     """Reload all extensions"""
+    #     try:
+    #         self.bot.load_extension(cogs.admin)
+    #         self.bot.load_extension(cogs.fun)
+    #         self.bot.load_extension(cogs.information)
+    #         self.bot.load_extension(cogs.log)
+    #         self.bot.load_extension(cogs.moderation)
+    #         self.bot.load_extension(cogs.music)
+    #         self.bot.load_extension(cogs.stats)
+    #     except Exception as e:
+    #         error = "".join(traceback.format_exception(type(e), e, e.__traceback__, 1))
+    #         return await ctx.send(f"Failed to reload extensions {extension}:\n```{error}```")
 
-        
     @commands.command(hidden=True)
     async def changeactidle(self, ctx):
         """Changed the status to idle."""

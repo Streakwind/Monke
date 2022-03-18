@@ -6,7 +6,7 @@ import traceback
 import sys
 import humanize
 from humanize import precisedelta
-from typing import union
+from typing import Union
 
 class Information(commands.Cog):
     def __init__(self, bot):
@@ -44,8 +44,6 @@ class Information(commands.Cog):
         
         if not member:
             member = ctx.author
-        
-        guild_member = isinstance(user, discord.Member)
 
         time_1 = str(ctx.message.created_at)[:19]
         
@@ -58,21 +56,21 @@ class Information(commands.Cog):
         
         embed.add_field(name="User created at", value=f"{time} ago", inline=True)
         
-        if guild_member: 
+        if ctx.guild: 
             if member in ctx.guild.members:
                 time_2=precisedelta(member.joined_at, minimum_unit="hours")
                 
                 embed.add_field(name="User joined at", value=f"{time_2} ago", inline=True)
             else:
                 embed.description += f"This user ({member}) is not in the guild"
+            
+            if member in ctx.guild.members:
+                if member.id == ctx.guild.owner.id:
+                    embed.description += f"\nThis user owns this server ({ctx.guild.name})"
         
         if member.bot:
-            embed.description += "This user is a bot"
+            embed.description += "This user is a bot"    
 
-        
-        if guild_member:     
-            if member.id == ctx.guild.owner.id:
-                embed.description += f"\nThis user owns this server ({ctx.guild.name})"
      #   embed.author.icon_url(url=member.avatar_url)
             
        # if member.bot == true:
