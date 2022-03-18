@@ -44,6 +44,8 @@ class Information(commands.Cog):
         if not member:
             member = ctx.author
         
+        guild_member = isinstance(user, discord.Member)
+
         time_1 = str(ctx.message.created_at)[:19]
         
         embed = discord.Embed(title="ALL TIMES ARE IN UTC", description="", color=discord.Color.blue())
@@ -54,7 +56,8 @@ class Information(commands.Cog):
         time=precisedelta(member.created_at, minimum_unit="hours")
         
         embed.add_field(name="User created at", value=f"{time} ago", inline=True)
-        if ctx.guild: 
+        
+        if guild_member: 
             if member in ctx.guild.members:
                 time_2=precisedelta(member.joined_at, minimum_unit="hours")
                 
@@ -66,7 +69,7 @@ class Information(commands.Cog):
             embed.description += "This user is a bot"
 
         
-        if ctx.guild:     
+        if guild_member:     
             if member.id == ctx.guild.owner.id:
                 embed.description += f"\nThis user owns this server ({ctx.guild.name})"
      #   embed.author.icon_url(url=member.avatar_url)
