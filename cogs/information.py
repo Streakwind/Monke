@@ -92,7 +92,7 @@ class Information(commands.Cog):
             embed.set_thumbnail(url=guild.icon_url)
             embed.add_field(name="Guild Owner", value=guild.owner, inline=True)
             embed.set_footer(icon_url="https://images-ext-2.discordapp.net/external/dAn5X2wnC6ZXQ1R2Gc-KR4cTBiKv7gTxQlWQZXIq0xc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/736380975025619025/ab9e6644e42342400080d8dc3ce6afd3.webp?width=80&height=80", text=f"Monke")
-            embed.add_field(name="Guild created at", value=f"<t:{int(guild.created_at)}>", inline=True)
+            embed.add_field(name="Guild created at", value=f"<t:{int(guild.created_at.timestamp())}>", inline=True)
             embed.add_field(name="Members", value=guild.member_count, inline=True)
             embed.add_field(name="Emojis", value=guild.emojis, inline=True)
             embed.add_field(name="Emoji limit", value=guild.emoji_limit, inline=True)
