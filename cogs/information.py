@@ -81,18 +81,18 @@ class Information(commands.Cog):
  #       await ctx.send(f"{member}\nUSERID:{member.id}\nBOT:{isbot}\nAVATAR:{member.avatar_url}")
         await ctx.send(embed = embed)
     
-    @commands.command(aliases = ["gi"], disabled=True)
+    @commands.command(aliases = ["gi"])
     async def guildinfo(self, ctx):   
         
         guild = ctx.guild
         
         if ctx.guild:
-            embed = discord.Embed(title="TIMES ARE CONVERTED INTO YOUR TIME ZONE", description="", color=discord.Color.blue())
+            embed = discord.Embed(title="", description="", color=discord.Color.blue())
             embed.set_author(name=f"{guild} - {guild.id}", icon_url=guild.icon_url)
             embed.set_thumbnail(url=guild.icon_url)
             embed.add_field(name="Guild Owner", value=guild.owner, inline=True)
             embed.set_footer(icon_url="https://images-ext-2.discordapp.net/external/dAn5X2wnC6ZXQ1R2Gc-KR4cTBiKv7gTxQlWQZXIq0xc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/736380975025619025/ab9e6644e42342400080d8dc3ce6afd3.webp?width=80&height=80", text=f"Monke")
-            embed.add_field(name="Guild created at", value=str(guild.created_at)[:19], inline=True)
+            embed.add_field(name="Guild created at", value=f"<t:{int(guild.created_at)}>", inline=True)
             embed.add_field(name="Members", value=guild.member_count, inline=True)
             embed.add_field(name="Emojis", value=guild.emojis, inline=True)
             embed.add_field(name="Emoji limit", value=guild.emoji_limit, inline=True)
