@@ -144,7 +144,7 @@ class Log (commands.Cog):
                         return await ctx.send('I could not find that member. Please try again.')
             
             if not self.bot.debugMode:
-                return await ctx.send("An unknown error occured. Add an issue at <https://github.com/Streakwind/Monke/issues> and press the \"New Issue\" button! Thanks!"
+                return await ctx.send("An unknown error occured. Add an issue at <https://github.com/Streakwind/Monke/issues> and press the \"New Issue\" button! Thanks!")
 
 def setup(bot):
     bot.add_cog(Log(bot))
