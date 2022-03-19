@@ -54,7 +54,7 @@ class Information(commands.Cog):
         embed.set_footer(icon_url="https://images-ext-2.discordapp.net/external/dAn5X2wnC6ZXQ1R2Gc-KR4cTBiKv7gTxQlWQZXIq0xc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/736380975025619025/ab9e6644e42342400080d8dc3ce6afd3.webp?width=80&height=80", text=f"Monke | {time_1} ")
         
         #time=precisedelta(member.created_at, minimum_unit="hours")
-        time = member.created.timestamp()
+        time = member.created_at.timestamp()
 
         embed.add_field(name="User created at", value=f"<t:{time*1000}> ago", inline=True)
         
