@@ -48,22 +48,22 @@ class Information(commands.Cog):
 
         time_1 = str(ctx.message.created_at)[:19]
         
-        embed = discord.Embed(title=member, description="", color=discord.Color.blue())
+        embed = discord.Embed(title=f"{member}", description="", color=discord.Color.blue())
         embed.set_author(name=f"{member} - {member.id}", icon_url=member.avatar_url)
         embed.set_thumbnail(url=member.avatar_url)
         embed.set_footer(icon_url="https://images-ext-2.discordapp.net/external/dAn5X2wnC6ZXQ1R2Gc-KR4cTBiKv7gTxQlWQZXIq0xc/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/736380975025619025/ab9e6644e42342400080d8dc3ce6afd3.webp?width=80&height=80", text=f"Monke | {time_1} ")
         
         #time=precisedelta(member.created_at, minimum_unit="hours")
-        time = member.created_at.timestamp()
+        #time = member.created_at.timestamp()
 
-        embed.add_field(name="User created at", value=f"<t:{int(time)}>", inline=True)
+        embed.add_field(name="User created at", value=f"<t:{int(member.created_at.timestamp())}>", inline=True)
         
         if ctx.guild:
             if member in ctx.guild.members:
                 #time_2=precisedelta(member.joined_at, minimum_unit="hours")
-                time_2 = member.joined_at.timestamp()
+                #time_2 = member.joined_at.timestamp()
                 
-                embed.add_field(name="User joined at", value=f"<t:{int(time_2)}>", inline=True)
+                embed.add_field(name="User joined at", value=f"<t:{int(member.joined_at.timestamp())}>", inline=True)
             else:
                 embed.description += f"This user ({member}) is not in the guild"
             
