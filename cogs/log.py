@@ -112,6 +112,9 @@ class Log (commands.Cog):
             embed.add_field(name="Guild", value=guild)
             
             await webhook.send(embed=embed)
+                        
+            print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
             if self.bot.debugMode:
                 embed_1 = discord.Embed(title="Command Error", description=f"Ignoring exception in command {ctx.command}", color=discord.Color.blue())
@@ -122,26 +125,26 @@ class Log (commands.Cog):
 
             if isinstance(error, commands.CommandNotFound):
                 if not self.bot.debugMode:
-                    await ctx.send(":x: Command not found")
+                    return await ctx.send(":x: Command not found")
                 
             if isinstance(error, commands.DisabledCommand):
                 if not self.bot.debugMode:
-                    await ctx.send(f'{ctx.command} has been disabled.')
+                    return await ctx.send(f'{ctx.command} has been disabled.')
 
             elif isinstance(error, commands.NoPrivateMessage):
                 if not self.bot.debugMode:
                     try:
-                        await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
+                        return await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
                     except discord.HTTPException:
                         pass
 
             elif isinstance(error, commands.BadArgument):
                 if not self.bot.debugMode:
                     if ctx.command.qualified_name == 'tag list':
-                        await ctx.send('I could not find that member. Please try again.')
+                        return await ctx.send('I could not find that member. Please try again.')
             
-            print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+            elif not self.bot.debugMode:
+                return await ctx.send("An unknown error occured. Add an issue at <https://github.com/Streakwind/Monke/issues> and press the \"New Issue\" button! Thanks!"
 
 def setup(bot):
     bot.add_cog(Log(bot))
